@@ -38,8 +38,8 @@ Task + Constraints
          │ optimal fused output
          ▼
 ┌─────────────────┐
-│  3. IMMUNE v4.1 │  Scan errors + detect new strategies → Learn both
-│  (Adaptive)     │  Agent: Haiku (scanner) + SQLite FTS4 + adapter CLI
+│  3. IMMUNE v5.0 │  Scan errors + detect new strategies → Learn both
+│  (Adaptive)     │  Agent: Haiku (scanner) + embed daemon + adapter CLI
 └────────┬────────┘
          │
          ▼
@@ -83,13 +83,13 @@ Based on the [PRISM Framework](https://github.com/contactjccoaching-wq/prism-fra
 
 **Stochastic mode** — N identical agents explore the same prompt. Pure LLM stochasticity produces diverse trajectories. The meta-agent fuses the results.
 
-### 3. Immune System v4.1 (Hybrid Adaptive)
+### 3. Immune System v5.0 (Embed-First Adaptive)
 
 Dual persistent memory: **antibodies** (negative patterns to avoid) and **cheatsheet** (positive strategies to repeat). Each output is scanned for errors AND analyzed for new winning strategies. Both memories grow with every run.
 
-All immune operations go through the **adapter CLI** (`immune-adapter.js`), with SQLite FTS4 storage + JSON dual-write for safety. Deduplication uses local embeddings (all-MiniLM-L6-v2, zero tokens) with Jaccard fallback. Includes context memory, universal scoring (0-100), and pre-compaction flush.
+All search, dedup, and retrieval goes through the **embed daemon** (local bi-encoder + cross-encoder on port 8091). The adapter CLI is an HTTP client to the daemon, with FTS4/Jaccard fallback when offline. Language-agnostic semantic matching — works equally well in French, English, or any language.
 
-The 100th output benefits from all errors caught AND all strategies discovered in the previous 99. See the standalone [Immune System v4.1](https://github.com/contactjccoaching-wq/immune) repo for details.
+The 100th output benefits from all errors caught AND all strategies discovered in the previous 99. See the standalone [Immune System v5.0](https://github.com/Mnemoclaw/immune) repo for details.
 
 ---
 
@@ -146,7 +146,7 @@ Shows all 3 systems in action with mocked responses and full bio-event logs.
 | Project | Role |
 |---------|------|
 | **Chimera** *(this repo)* | 3-stage bio pipeline — *how to optimize* |
-| **[Immune v4.1](https://github.com/contactjccoaching-wq/immune)** | Hybrid adaptive memory (cheatsheet + antibodies) + SQLite + adapter CLI — *what to remember* |
+| **[Immune v5.0](https://github.com/Mnemoclaw/immune)** | Embed-first adaptive memory (cheatsheet + antibodies) + embed daemon + adapter CLI — *what to remember* |
 | **[PRISM](https://github.com/contactjccoaching-wq/prism-framework)** | N-parallel sampling + meritocratic synthesis — *what to ask* |
 | **[Spinal Loop](https://github.com/contactjccoaching-wq/spinal-loop)** | Bio-inspired model routing — *who to ask* |
 | **[DACO](https://github.com/contactjccoaching-wq/daco-framework)** | MCP tool orchestration — *what to do with it* |
