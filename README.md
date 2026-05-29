@@ -5,6 +5,8 @@
 
 **Bio-inspired optimization pipeline for Claude Code.**
 
+> **Compatibility:** Designed for [Claude Code](https://claude.ai/code) but works with any Anthropic-compatible API endpoint (via `ANTHROPIC_BASE_URL`). Not locked to Anthropic — any provider exposing the Messages API format will work.
+
 ![Chimera Pipeline](chimera-pipeline.png)
 
 > Three biological systems in sequence: explore everything, synthesize the best, catch the errors.
